@@ -4,14 +4,32 @@ use std::io::{self, BufReader, Read, Write};
 
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
-    if args.len() < 3 {
-        eprintln!("Usage: {} <file_path> <split_size>", args[0]);
+    if args.len() < 4 {
+        eprintln!("Usage: {} <split|reassemble> <file_path> <split_size|part_count>", args[0]);
         return Ok(());
     }
 
-    let file_path = &args[1];
-    let split_size = parse_size(&args[2])?;
+    let command = &args[1];
+    let file_path = &args[2];
 
+    match command.as_str() {
+        "split" => {
+            let split_size = parse_size(&args[3])?;
+            split_file(file_path, split_size)?;
+        }
+        "reassemble" => {
+            let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
+            reassemble_files(file_path, part_count)?;
+        }
+        _ => {
+            eprintln!("Invalid command. Use 'split' or 'reassemble'.");
+        }
+    }
+
+    Ok(())
+}
+
+fn split_file(file_path: &str, split_size: usize) -> io::Result<()> {
     let file = File::open(file_path)?;
     let mut reader = BufReader::new(file);
     let mut buffer = vec![0; split_size];
@@ -40,7 +58,33 @@ fn parse_size(size_str: &str) -> io::Result<usize> {
         "tb" => num * 1024 * 1024 * 1024 * 1024,
         "gb" => num * 1024 * 1024 * 1024,
         "mb" => num * 1024 * 1024,
+        "kb" => num * 1024,
         _ => return Err(io::Error::new(io::ErrorKind::InvalidInput, "Invalid unit")),
     };
     Ok(size)
+}
+
+fn reassemble_files(file_path: &str, part_count: usize) -> io::Result<()> {
+    let mut output_file = File::create(file_path)?;
+    for part_number in 0..part_count {
+        let part_path = format!("{}_part_{}", file_path, part_number);
+        let mut part_file = File::open(&part_path)?;
+        let mut buffer = Vec::new();
+        part_file.read_to_end(&mut buffer)?;
+        output_file.write_all(&buffer)?;
+    }
+    Ok(())
+}
+
+fn validate_integrity(original_file_path: &str, reassembled_file_path: &str) -> io::Result<bool> {
+    let mut original_file = File::open(original_file_path)?;
+    let mut reassembled_file = File::open(reassembled_file_path)?;
+
+    let mut original_buffer = Vec::new();
+    let mut reassembled_buffer = Vec::new();
+
+    original_file.read_to_end(&mut original_buffer)?;
+    reassembled_file.read_to_end(&mut reassembled_buffer)?;
+
+    Ok(original_buffer == reassembled_buffer)
 }

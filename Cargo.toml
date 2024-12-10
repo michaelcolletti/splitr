@@ -1,0 +1,8 @@
+[package]
+name = "splitr"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+aws-sdk-s3 = "0.0.26-alpha"
+google-cloud-storage = "0.10.0"
