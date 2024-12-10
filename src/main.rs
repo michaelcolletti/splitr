@@ -20,6 +20,24 @@ fn main() -> io::Result<()> {
         "reassemble" => {
             let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
             reassemble_files(file_path, part_count)?;
+            validate_integrity(file_path, &format!("{}_reassembled", file_path))?;
+        }
+        _ => {
+            eprintln!("Invalid command. Use 'split' or 'reassemble'.");
+        }
+    }
+
+    let command = &args[1];
+    let file_path = &args[2];
+
+    match command.as_str() {
+        "split" => {
+            let split_size = parse_size(&args[3])?;
+            split_file(file_path, split_size)?;
+        }
+        "reassemble" => {
+            let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
+            reassemble_files(file_path, part_count)?;
         }
         _ => {
             eprintln!("Invalid command. Use 'split' or 'reassemble'.");
