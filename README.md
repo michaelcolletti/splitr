@@ -6,7 +6,7 @@
 
 - Back then, I thought Golang might be perfect for this, partially because I was so into learning more about Golang, wanted to have a singular binary and had already dug enough into the conventional well worn ways to solve these problems (split, other proprietary and open utilities etc) but they all lacked the staggering performance I knew would be achievable with Rust. 
 
-- Also, in certain migration cases I saw that being resourceful and imaginative had limits. Sometimes, 'that dog won't hunt' and constraints win some days. However, if one can run in a container, or execute the rustc compiler or Cargo, this program, as simple as it is, could be really helpful. Often this wont be permitted as tools, scripts etc. need to be approved and could go through quite a lengthy manual process of validation and vetting by customers. It is this reason that non-compiled languages, besides pliability, are effectively used for highly regulated environments. Here, I'm talking about Python and PERL (no joke, it still works and is used more than I imagined). to [meryln](https://en.wikipedia.org/wiki/Randal_L._Schwartz)
+- Also, in certain migration cases I saw that being resourceful and imaginative had limits. Sometimes, 'that dog won't hunt' and constraints win some days. However, if one can run in a container, or execute the rustc compiler or Cargo, this program, as simple as it is, could be really helpful. Often this wont be permitted as tools, scripts etc. need to be approved and could go through quite a lengthy manual process of validation and vetting by customers. It is this reason that non-compiled languages, besides pliability, are effectively used for highly regulated environments. Here, I'm talking about Python and PERL (no joke, it still works and is used more than I imagined). to [Meryln](https://en.wikipedia.org/wiki/Randal_L._Schwartz)
 
 ### Use Cases
 
@@ -19,15 +19,25 @@ A performant Rust program that will split very large files of different formats 
 ### Ways to Run Splitr  
 
 - Running from the CLI
-- Running from a Podman/Docker container 
-- (TBA) Web Frontend with Object Storage 
 
-### Command Line Options
+### Command Line Options Running Locally
 
 - To split a file: target/debug/splitr <split|reassemble> <file_path> <split_size|part_count>
 - Reassemble: target/debug/splitr reassemble> <file_path> <split_size|part_count>
+- Detail to split: **cargo run split BinaryFileName 1MB 10** _Note the multiple files broken out_
+- Detail to reassemble: **cargo run BinaryFileName reassemble 10  _The file is back in one piece_
 
-### Running with Docker
+### Examples 
+
+- `<split|reassemble>`: The command to either split or reassemble the file.
+- `<file_path>`: The path to the file to be split or reassembled.
+- `<split_size|part_count>`: The size to split the file into (e.g., `10MB`, `1GB`, `1TB`) and the number of parts to reassemble.
+
+
+### Running with Docker (this section also experimental)
+
+- Running from a Podman/Docker container 
+- (TBA) Web Frontend with Object Storage 
 
 - A prereq is having the repo cloned or just download the multi-stage build of a rust env using the Dockerfile.
 
