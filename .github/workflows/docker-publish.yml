@@ -34,7 +34,7 @@ jobs:
           echo "splitr:latest" >> package.json
 
       - name: Upload the image to GitHub Packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ${{ secrets.DOCKER_USERNAME }}/your-image-name
           path: your-image-name:latest
