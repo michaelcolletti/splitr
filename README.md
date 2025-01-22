@@ -1,5 +1,6 @@
 <img src="img/splitr1.jpg" width="600" />
-# Why Splitr? 
+
+# Splitr? 
 
 - While studying data-center migration and enterprise architecture and cloud, I came upon some talented folks that were extraordinary at creating a workable solution where there seemingly wasn't a way around a problem. Sometimes this was in using tools that needed approval (e.g. Authority to Operate, ATO)
 
@@ -7,13 +8,13 @@
 
 - Also, in certain migration cases I saw that being resourceful and imaginative had limits. Sometimes, 'that dog won't hunt' and constraints win some days. However, if one can run in a container, or execute the rustc compiler or Cargo, this program, as simple as it is, could be really helpful. Often this wont be permitted as tools, scripts etc. need to be approved and could go through quite a lengthy manual process of validation and vetting by customers. It is this reason that non-compiled languages, besides pliability, are effectively used for highly regulated environments. Here, I'm talking about Python and PERL (no joke, it still works and is used more than I imagined). to [meryln](https://en.wikipedia.org/wiki/Randal_L._Schwartz)
 
-### Use Cases 
+### Use Cases
 
 - There are many use-cases with a need to split and reassemble files quickly and reliably. It should be performant and auditable. Maybe you need to move a huge system image or you're in log-hell needing to move a important log, or see the middle of a file that you can't even open.
 
-### Enter **splitr**
+### Enter **Splitr**
 
-A performant Rust program that will split very large files of different types of formats into manageable parts. It should have the ability to save locally (default to $DATADUMP environment variable for filesystem dump). 
+A performant Rust program that will split very large files of different formats into manageable parts. It should have the ability to save locally (default to $DATADUMP environment variable for filesystem dump). 
 
 ### Ways to Run Splitr  
 
@@ -26,20 +27,17 @@ A performant Rust program that will split very large files of different types of
 - To split a file: target/debug/splitr <split|reassemble> <file_path> <split_size|part_count>
 - Reassemble: target/debug/splitr reassemble> <file_path> <split_size|part_count>
 
-### Command Line Options
-
-- Split To split a file: target/debug/splitr <split|reassemble> <file_path> <split_size|part_count>
-- Reassemble: target/debug/splitr reassemble> <file_path> <split_size|part_count>
-
 ### Running with Docker
 
-- Prereq is having the repo cloned or just download the multi-stage build of a rust env using the Dockerfile.
+- A prereq is having the repo cloned or just download the multi-stage build of a rust env using the Dockerfile.
 
 ```sh
 git clone https://github.com/michaelcolletti/splitr.git`
 ```
 
-To build and run the Docker container, follow these steps:
+### To build and run the Docker container, 
+
+- Follow these steps:
 
 1. **Build the Docker image:**
 

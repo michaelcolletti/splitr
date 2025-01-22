@@ -20,24 +20,6 @@ fn main() -> io::Result<()> {
         "reassemble" => {
             let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
             reassemble_files(file_path, part_count)?;
-            validate_integrity(file_path, &format!("{}_reassembled", file_path))?;
-        }
-        _ => {
-            eprintln!("Invalid command. Use 'split' or 'reassemble'.");
-        }
-    }
-
-    let command = &args[1];
-    let file_path = &args[2];
-
-    match command.as_str() {
-        "split" => {
-            let split_size = parse_size(&args[3])?;
-            split_file(file_path, split_size)?;
-        }
-        "reassemble" => {
-            let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
-            reassemble_files(file_path, part_count)?;
         }
         _ => {
             eprintln!("Invalid command. Use 'split' or 'reassemble'.");
@@ -83,7 +65,9 @@ fn parse_size(size_str: &str) -> io::Result<usize> {
 }
 
 fn reassemble_files(file_path: &str, part_count: usize) -> io::Result<()> {
-    let mut output_file = File::create(file_path)?;
+    let reassembled_file_path = format!("{}_reassembled", file_path);
+    let mut output_file = File::create(&reassembled_file_path)?;
+
     for part_number in 0..part_count {
         let part_path = format!("{}_part_{}", file_path, part_number);
         let mut part_file = File::open(&part_path)?;
@@ -91,6 +75,15 @@ fn reassemble_files(file_path: &str, part_count: usize) -> io::Result<()> {
         part_file.read_to_end(&mut buffer)?;
         output_file.write_all(&buffer)?;
     }
+
+    println!("Reassembly complete. Validating integrity...");
+
+    if validate_integrity(file_path, &reassembled_file_path)? {
+        println!("Validation successful. The reassembled file is identical to the original file.");
+    } else {
+        println!("Validation failed. The reassembled file differs from the original file.");
+    }
+
     Ok(())
 }
 
