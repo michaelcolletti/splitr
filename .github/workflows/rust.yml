@@ -11,12 +11,30 @@ env:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Build
       run: cargo build --verbose
+
     - name: Run tests
       run: cargo test --verbose
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v1.0.0  # Update this to use SemVer
+        release_name: Release v1.0.0  # Update this to use SemVer
+        draft: false
+        prerelease: false
+
+    - name: Upload to GitHub Packages
+      uses: actions/upload-artifact@v2
+      with:
+        name: rust-artifact
+        path: target/release/splitr  # Update this to the actual path of your artifact
