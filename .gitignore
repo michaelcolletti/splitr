@@ -159,3 +159,6 @@ Cargo.lock
 *.ovpn98
 *.ovpn99
 *.ovpn100
+
+# Mac
+.DS_Store

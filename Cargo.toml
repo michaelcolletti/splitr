@@ -6,3 +6,5 @@ edition = "2021"
 [dependencies]
 aws-sdk-s3 = "0.0.26-alpha"
 google-cloud-storage = "0.10.0"
+openssl = "0.10.70"
+webpki = "0.22.2"
