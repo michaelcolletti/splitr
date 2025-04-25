@@ -30,17 +30,50 @@ jobs:
       run: cargo test --verbose
     - name: Run benchmarks
       run: cargo bench --verbose
+
+    - name: Get Latest Tag
+      id: get_latest_tag
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const tags = await github.repos.listTags({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+
+          if (tags.data.length === 0) {
+            core.setOutput('tag', 'v0.0.0'); // Default to v0.0.0 if no tags exist
+          } else {
+            core.setOutput('tag', tags.data[0].name);
+          }
+
+    - name: Increment Tag
+      id: increment_tag
+      run: |
+        # Extract the latest tag
+        latest_tag=${{ steps.get_latest_tag.outputs.tag }}
+
+        # Increment the version (patch level as an example)
+        IFS='.' read -ra VERSION <<< "${latest_tag#v}"
+        major=${VERSION[0]}
+        minor=${VERSION[1]}
+        patch=${VERSION[2]}
+        patch=$((patch + 1))
+        new_tag="v${major}.${minor}.${patch}"
+
+        echo "new_tag=${new_tag}" >> $GITHUB_ENV
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: v1.0.0  # Update this to use SemVer
-        release_name: Release v1.0.0  # Update this to use SemVer
+        tag_name: ${{ env.new_tag }}
+        release_name: Release ${{ env.new_tag }}
         draft: false
         prerelease: false
-
+    
     - name: Upload to GitHub Packages
       uses: actions/upload-artifact@v4
       with:
