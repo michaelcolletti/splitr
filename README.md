@@ -2,9 +2,9 @@
 
 # Splitr? 
 
-- While studying data-center migration and enterprise architecture and cloud, I came upon some talented folks that were extraordinary at creating a workable solution where there seemingly wasn't a way around a problem. Sometimes this was in using tools that needed approval (e.g. Authority to Operate, ATO)
+- While studying data-center migration and enterprise architecture and cloud, I came upon some talented folks that were extraordinary at creating a workable solution where there seemingly wasn't a way around a problem. Sometimes this was in using tools that needed approval (e.g. Authority to Operate, ATO).
 
-- Back then, I thought Golang might be perfect for this, partially because I was so into learning more about Golang, wanted to have a singular binary and had already dug enough into the conventional well worn ways to solve these problems (split, other proprietary and open utilities etc) but they all lacked the staggering performance I knew would be achievable with Rust. 
+- Back then, I thought Golang might be perfect for this, partially because I was so into learning more about Golang, wanted to have a singular binary and had already dug enough into the conventional well worn ways to solve these problems (split, other proprietary and open utilities etc). These all lacked the staggering performance I knew would be achievable with Rust. 
 
 - Also, in certain migration cases I saw that being resourceful and imaginative had limits. Sometimes, 'that dog won't hunt' and constraints win some days. However, if one can run in a container, or execute the rustc compiler or Cargo, this program, as simple as it is, could be really helpful. Often this wont be permitted as tools, scripts etc. need to be approved and could go through quite a lengthy manual process of validation and vetting by customers. It is this reason that non-compiled languages, besides pliability, are effectively used for highly regulated environments. Here, I'm talking about Python and PERL (no joke, it still works and is used more than I imagined). to [Meryln](https://en.wikipedia.org/wiki/Randal_L._Schwartz)
 
