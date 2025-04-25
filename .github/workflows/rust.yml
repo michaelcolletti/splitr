@@ -32,20 +32,24 @@ jobs:
       run: cargo bench --verbose
 
     - name: Get Latest Tag
-      id: get_latest_tag
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const tags = await github.repos.listTags({
-            owner: context.repo.owner,
-            repo: context.repo.repo
-          });
+  id: get_latest_tag
+  uses: actions/github-script@v6
+  with:
+    script: |
+      if (github && github.repos && typeof github.repos.listTags === 'function') {
+        const tags = await github.repos.listTags({
+          owner: context.repo.owner,
+          repo: context.repo.repo
+        });
 
-          if (tags.data.length === 0) {
-            core.setOutput('tag', 'v0.0.0'); // Default to v0.0.0 if no tags exist
-          } else {
-            core.setOutput('tag', tags.data[0].name);
-          }
+        if (tags.data.length === 0) {
+          core.setOutput('tag', 'v0.0.0'); // Default to v0.0.0 if no tags exist
+        } else {
+          core.setOutput('tag', tags.data[0].name);
+        }
+      } else {
+        core.setOutput('tag', 'v0.0.0'); // Fallback if listTags is unavailable
+      }
 
     - name: Increment Tag
       id: increment_tag
