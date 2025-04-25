@@ -1,6 +1,8 @@
 <img src="img/splitr1.jpg" width="600" />
 
 [![Rust](https://github.com/michaelcolletti/splitr/actions/workflows/rust.yml/badge.svg)](https://github.com/michaelcolletti/splitr/actions/workflows/rust.yml)
+- Docker Build [![Rust](https://github.com/michaelcolletti/splitr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/michaelcolletti/splitr/actions/workflows/docker-publish.yml)
+- 
 # Splitr? 
 
 - While studying data-center migration and enterprise architecture and cloud, I came upon some talented folks that were extraordinary at creating a workable solution where there seemingly wasn't a way around a problem. Sometimes this was in using tools that needed approval (e.g. Authority to Operate, ATO).
