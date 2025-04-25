@@ -17,19 +17,19 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
 
+    - name: Format 
+      run: cargo fmt
     - name: Build
       run: cargo build --verbose
-     name: Run Check
+    - name: Run Check
       run: cargo check --verbose
     - name: Run tests
       run: cargo test --verbose
-     name: Run benchmarks
+    - name: Run benchmarks
       run: cargo bench --verbose
-
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
