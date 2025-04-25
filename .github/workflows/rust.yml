@@ -31,7 +31,7 @@ jobs:
     - name: Run benchmarks
       run: cargo bench --verbose
 
-    - name: Get Latest Tag
+- name: Get Latest Tag
   id: get_latest_tag
   uses: actions/github-script@v6
   with:
@@ -50,8 +50,8 @@ jobs:
       } else {
         core.setOutput('tag', 'v0.0.0'); // Fallback if listTags is unavailable
       }
-
-    - name: Increment Tag
+      
+      - name: Increment Tag
       id: increment_tag
       run: |
         # Extract the latest tag
