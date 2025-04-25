@@ -49,12 +49,11 @@ jobs:
           } else {
             core.setOutput('tag', 'v0.0.0'); // Fallback if listTags is unavailable
           }      
-      - name: Increment Tag
+    - name: Increment Tag
       id: increment_tag
       run: |
         # Extract the latest tag
         latest_tag=${{ steps.get_latest_tag.outputs.tag }}
-
         # Increment the version (patch level as an example)
         IFS='.' read -ra VERSION <<< "${latest_tag#v}"
         major=${VERSION[0]}
@@ -64,9 +63,9 @@ jobs:
         new_tag="v${major}.${minor}.${patch}"
 
         echo "new_tag=${new_tag}" >> $GITHUB_ENV
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -75,8 +74,8 @@ jobs:
           draft: false
           prerelease: false
       
-      - name: Upload to GitHub Packages
-        uses: actions/upload-artifact@v4
+    - name: Upload to GitHub Packages
+      uses: actions/upload-artifact@v4
         with:
           name: rust-artifact
           path: target/release/splitr  # Update this to the actual path of your artifact
