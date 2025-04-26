@@ -1,6 +1,6 @@
 <img src="img/splitr1.jpg" width="600" />
 
-[![Rust Build](https://github.com/michaelcolletti/splitr/actions/workflows/rust.yml/badge.svg)](https://github.com/michaelcolletti/splitr/actions/workflows/rust.yml)
+[![Build, Test, Tag, Release and Deploy](https://github.com/michaelcolletti/splitr/actions/workflows/rust-build.yml/badge.svg)](https://github.com/michaelcolletti/splitr/actions/workflows/rust-build.yml)
 [![Rust Docker Deploy](https://github.com/michaelcolletti/splitr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/michaelcolletti/splitr/actions/workflows/docker-publish.yml)
 # Splitr? 
 
