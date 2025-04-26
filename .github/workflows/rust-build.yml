@@ -78,4 +78,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: rust-artifact
-        path: target/release/splitr  # Update this to the actual path of your artifact
+        path:  /home/runner/work/splitr/splitr/target/release/splitr  # Update this to the actual path of your artifact
