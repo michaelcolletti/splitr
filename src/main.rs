@@ -5,7 +5,10 @@ use std::io::{self, BufReader, Read, Write};
 fn main() -> io::Result<()> {
     let args: Vec<String> = env::args().collect();
     if args.len() < 4 {
-        eprintln!("Usage: {} <split|reassemble> <file_path> <split_size|part_count>", args[0]);
+        eprintln!(
+            "Usage: {} <split|reassemble> <file_path> <split_size|part_count>",
+            args[0]
+        );
         return Ok(());
     }
 
@@ -18,7 +21,9 @@ fn main() -> io::Result<()> {
             split_file(file_path, split_size)?;
         }
         "reassemble" => {
-            let part_count: usize = args[3].parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
+            let part_count: usize = args[3]
+                .parse()
+                .map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid part count"))?;
             reassemble_files(file_path, part_count)?;
         }
         _ => {
@@ -53,7 +58,9 @@ fn split_file(file_path: &str, split_size: usize) -> io::Result<()> {
 fn parse_size(size_str: &str) -> io::Result<usize> {
     let size_str = size_str.to_lowercase();
     let (num, unit) = size_str.split_at(size_str.len() - 2);
-    let num: usize = num.parse().map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid size"))?;
+    let num: usize = num
+        .parse()
+        .map_err(|_| io::Error::new(io::ErrorKind::InvalidInput, "Invalid size"))?;
     let size = match unit {
         "tb" => num * 1024 * 1024 * 1024 * 1024,
         "gb" => num * 1024 * 1024 * 1024,

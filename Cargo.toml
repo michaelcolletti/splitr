@@ -4,7 +4,11 @@ version = "0.2.0"
 edition = "2021"
 
 [dependencies]
-aws-sdk-s3 = "0.0.26-alpha"
+#aws-sdk-s3 = "0.0.26-alpha"
+aws-sdk-s3 = "1.120.0"
+
 google-cloud-storage = "0.10.0"
 openssl = "0.10.70"
 webpki = "0.22.2"
+rsa = "0.9.8"
+ring = "0.17.14"
